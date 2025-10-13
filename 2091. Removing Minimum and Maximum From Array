@@ -1,0 +1,36 @@
+class Solution {
+    public int minimumDeletions(int[] nums) {
+        int n = nums.length;
+        if (n == 1) return 1;
+        
+        int minIndex = 0;
+        int maxIndex = 0;
+        
+        // Find indices of min and max elements
+        for (int i = 0; i < n; i++) {
+            if (nums[i] < nums[minIndex]) {
+                minIndex = i;
+            }
+            if (nums[i] > nums[maxIndex]) {
+                maxIndex = i;
+            }
+        }
+        
+        // Ensure left is the smaller index and right is the larger index
+        int left = Math.min(minIndex, maxIndex);
+        int right = Math.max(minIndex, maxIndex);
+        
+        // Three strategies:
+        // 1. Remove from front only (remove up to right index)
+        int option1 = right + 1;
+        
+        // 2. Remove from back only (remove from left index to end)
+        int option2 = n - left;
+        
+        // 3. Remove from both ends (remove from start to left, and from right to end)
+        int option3 = (left + 1) + (n - right);
+        
+        // Return the minimum of all three options
+        return Math.min(option1, Math.min(option2, option3));
+    }
+}
